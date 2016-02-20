@@ -13,7 +13,10 @@ public class MainActivity extends ActionBarActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
+        Request1 req=new Request1(new Intent(this,CommentList.class),this,"dssdds");
+        req.request();
+//        Intent intent=new Intent(this,CommentList.class);
+//        startActivity(intent);
     }
 
     @Override

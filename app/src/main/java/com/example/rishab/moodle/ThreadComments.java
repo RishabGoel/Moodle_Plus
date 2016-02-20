@@ -7,6 +7,7 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ListView;
 
 import com.android.volley.Request;
@@ -14,20 +15,57 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
 
 public class ThreadComments extends ActionBarActivity {
-    String URL="http://10.0.2.2:8000/threads/thread.json/";
+    String URL="http://10.192.57.72:8000/threads/thread.json/";
     String t_id;
+    String[] com_desc;
+    String[] com_author;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_thread_comments);
         String id=getIntent().getStringExtra("id");
         t_id=id;
-        fillFields();
+        try {
+            JSONObject data=new JSONObject(getIntent().getStringExtra("data"));
+            JSONObject thread=data.getJSONObject("thread");
+            String title=thread.getString("title");
+            String desc=thread.getString("description");
+            JSONArray comments=data.getJSONArray("comments");
+            com_author=new String[comments.length()];
+            com_desc=new String[comments.length()];
+            for (int i=0;i<comments.length();i++){
+
+                JSONObject comm=comments.getJSONObject(i);
+                com_desc[i]=comm.getString("description");
+                com_author[i]=Integer.toString(comm.getInt("user_id"));
+            }
+            CustomCommentListAdapter adapter=new CustomCommentListAdapter(ThreadComments.this,com_desc,com_author);
+            ListView listView=(ListView)findViewById(R.id.comment_list);
+            listView.setAdapter(adapter);
+
+
+        }
+        catch (JSONException e1){
+            Log.d("check","failed to load data");
+        }
+//        ListView listView=(ListView)findViewById(R.id.comment_list);
+//        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+//            @Override
+//            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+//                String idd=data_id[position];
+//                Log.d("thread pressed","sds");
+//                Intent intent=new Intent(ThreadComments.this,NewThreadComment.class);
+//                intent.putExtra("id",idd);
+//                Re a=new Re(intent,Th.this,"/threads/thread.json/"+idd);
+//                a.request();
+
+//        fillFields();
     }
 
     @Override
@@ -69,7 +107,7 @@ public class ThreadComments extends ActionBarActivity {
                     JSONObject data = new JSONObject("s");
                     String title,description;
                     String[] comments={"ss","ss","ss","ss"};
-                    CustomCommentListAdapter adapter=new CustomCommentListAdapter(ThreadComments.this,comments);
+                    CustomCommentListAdapter adapter=new CustomCommentListAdapter(ThreadComments.this,comments,comments);
                     ListView listView=(ListView)findViewById(R.id.comment_list);
                     listView.setAdapter(adapter);
 

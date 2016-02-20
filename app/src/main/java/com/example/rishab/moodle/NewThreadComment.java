@@ -10,6 +10,7 @@ import android.view.View;
 import android.widget.EditText;
 import android.widget.ListView;
 
+import com.android.volley.AuthFailureError;
 import com.android.volley.Request;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
@@ -18,13 +19,18 @@ import com.android.volley.toolbox.StringRequest;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.util.HashMap;
+import java.util.Map;
+
 
 public class NewThreadComment extends ActionBarActivity {
-
+    String idd;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_new_thread_comment);
+        String com_text=((EditText)findViewById(R.id.comment_content)).getText().toString();
+        idd=getIntent().getStringExtra("id");
     }
 
     @Override
@@ -52,39 +58,15 @@ public class NewThreadComment extends ActionBarActivity {
         String id=getIntent().getStringExtra("id");
         EditText editText=(EditText) findViewById(R.id.comment_content);
         String desc=(String)editText.getText().toString();
-        String URL="https://10.0.2.2:8000/threads/post_comment.json?thread_id="+id+"&description="+desc;
-        StringRequest stringRequest = new StringRequest(Request.Method.GET, URL, new Response.Listener<String>() {
-            @Override
-            public void onResponse(String string) {
-                //add the logic after recieving the data
-                try {
-                    Log.d("response", string);
-                    JSONObject data = new JSONObject("s");
-
-                }
-                catch (JSONException e){
-                    Log.d("check","error in getting the threads");
-                }
-
-            }
-        }, new Response.ErrorListener() {
-            @Override
-            public void onErrorResponse(VolleyError string) {
-                Log.d("check",string.toString());
-
-            }
-
-            ;
-        });
-        //the following is the global request queue to prevent construction of
-        // request queue again and again
-        SingletonNetworkClass.getInstance(this).addToRequestQueue(stringRequest);
-        //        queue.add(stringRequest);
+        final String URL="/threads/post_comment.json?description="+desc+"&thread_id="+idd;
+        Intent intent=new Intent(NewThreadComment.this,ThreadComments.class);
+        Re req=new Re(intent,NewThreadComment.this,URL);
+        req.request();
 
 
-        Intent intent=new Intent();
-
-        setResult(RESULT_OK,intent);
-        finish();
+//        Intent intent=new Intent();
+//
+//        setResult(RESULT_OK,intent);
+//        finish();
     }
 }

@@ -16,10 +16,12 @@ import com.android.volley.toolbox.StringRequest;
 public class CustomCommentListAdapter extends BaseAdapter{
     private Activity activity;
     private String[] comments;
-    public CustomCommentListAdapter(Activity act, String[] comments){
+    private String[] user;
+    public CustomCommentListAdapter(Activity act, String[] comments,String[] user_id){
         super();
         this.comments=comments;
         activity=act;
+//        user=user_id;
 //        this.data_desc=data_desc;
     }
     public int getCount() {

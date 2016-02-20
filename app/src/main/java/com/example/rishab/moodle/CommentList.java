@@ -17,6 +17,7 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -42,7 +43,16 @@ public class CommentList extends ActionBarActivity {
         String data=getIntent().getStringExtra("data");
         try {
             JSONObject a=new JSONObject(data);
-            Log.d("check_comment",a.getJSONObject("user").toString());
+            JSONArray data_recv = a.getJSONArray("course_threads");
+            data_title=new String[data_recv.length()];
+            data_desc=new String[data_recv.length()];
+            data_id=new String[data_recv.length()];
+            for (int i=0;i<data_recv.length();i++){
+                JSONObject d=data_recv.getJSONObject(i);
+                data_title[i]=d.getString("title");
+                data_desc[i]=d.getString("description");
+                data_id[i]=Integer.toString(d.getInt("id"));
+            }
         }
         catch (JSONException e1){
             Log.d("check","failed to load data");
@@ -60,76 +70,81 @@ public class CommentList extends ActionBarActivity {
 //        JSONObject data=req.data;
         String[] t={"d","d","d","d"};
         String[] d={"d","d","d","d"};
-        CustomListAdapter a=new CustomListAdapter(this,t,d);
+        CustomListAdapter a=new CustomListAdapter(this,data_title,data_desc);
         ListView listview=(ListView)findViewById(R.id.course_threads);
         listview.setAdapter(a);
         listview.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 String idd=data_id[position];
+                Log.d("thread pressed","sds");
                 Intent intent=new Intent(CommentList.this,ThreadComments.class);
                 intent.putExtra("id",idd);
+                Re a=new Re(intent,CommentList.this,"/threads/thread.json/"+idd);
+                a.request();
+//                Intent intent=new Intent(CommentList.this,ThreadComments.class);
+//                intent.putExtra("id",idd);
             }
         });
 //        l.OnItemClickListener();
 //        String course_code=getIntent().getStringExtra("coursecode3");
 //        URL+="courses/course.json/"+course_code+"/threads";
-        Log.d("ds", "d" + ":" + URL);
-        StringRequest stringRequest = new StringRequest(Request.Method.GET, URL, new Response.Listener<String>() {
-            @Override
-            public void onResponse(String string) {
-                //add the logic after recieving the data
-                try {
-                    Log.d("response",string);
-                    String URL="http://10.192.57.72:8000/courses/course.json/cop290/threads";
+//        Log.d("ds", "d" + ":" + URL);
+//        StringRequest stringRequest = new StringRequest(Request.Method.GET, URL, new Response.Listener<String>() {
+//            @Override
+//            public void onResponse(String string) {
+//                //add the logic after recieving the data
+//                try {
+//                    Log.d("response",string);
+//                    String URL="http://10.192.57.72:8000/courses/course.json/cop290/threads";
+////                    JSONObject data = new JSONObject("s");
+//                    Log.d("check_comment","do");
+//                    StringRequest stringRequest = new StringRequest(Request.Method.GET, URL, new Response.Listener<String>() {
+//                        @Override
+//                        public void onResponse(String string) {
+//                            //add the logic after recieving the data
+//                            try {
+//                                Log.d("response_courses",string);
+//
+//                                JSONObject data = new JSONObject("s");
+//                            }
+//                            catch (JSONException e){
+//                                Log.d("check","error in getting the threads");
+//                            }
+//
+//                        }
+//                    }, new Response.ErrorListener() {
+//                        @Override
+//                        public void onErrorResponse(VolleyError string) {
+//                            Log.d("check",string.toString());
+//
+//                        }
+//
+//                        ;
+//                    });
+//                    //the following is the global request queue to prevent construction of
+//                    // request queue again and again
+//                    SingletonNetworkClass.getInstance(CommentList.this).addToRequestQueue(stringRequest);
 //                    JSONObject data = new JSONObject("s");
-                    Log.d("check_comment","do");
-                    StringRequest stringRequest = new StringRequest(Request.Method.GET, URL, new Response.Listener<String>() {
-                        @Override
-                        public void onResponse(String string) {
-                            //add the logic after recieving the data
-                            try {
-                                Log.d("response_courses",string);
-
-                                JSONObject data = new JSONObject("s");
-                            }
-                            catch (JSONException e){
-                                Log.d("check","error in getting the threads");
-                            }
-
-                        }
-                    }, new Response.ErrorListener() {
-                        @Override
-                        public void onErrorResponse(VolleyError string) {
-                            Log.d("check",string.toString());
-
-                        }
-
-                        ;
-                    });
-                    //the following is the global request queue to prevent construction of
-                    // request queue again and again
-                    SingletonNetworkClass.getInstance(CommentList.this).addToRequestQueue(stringRequest);
-                    JSONObject data = new JSONObject("s");
-                }
-                catch (JSONException e){
-                    Log.d("check","error in getting the threads");
-                }
-
-            }
-        }, new Response.ErrorListener() {
-            @Override
-            public void onErrorResponse(VolleyError string) {
-                Log.d("check",string.toString());
-
-            }
-
-            ;
-        });
-        //the following is the global request queue to prevent construction of
-        // request queue again and again
-        SingletonNetworkClass.getInstance(this).addToRequestQueue(stringRequest);
-        //        queue.add(stringRequest);
+//                }
+//                catch (JSONException e){
+//                    Log.d("check","error in getting the threads");
+//                }
+//
+//            }
+//        }, new Response.ErrorListener() {
+//            @Override
+//            public void onErrorResponse(VolleyError string) {
+//                Log.d("check",string.toString());
+//
+//            }
+//
+//            ;
+//        });
+//        //the following is the global request queue to prevent construction of
+//        // request queue again and again
+//        SingletonNetworkClass.getInstance(this).addToRequestQueue(stringRequest);
+//        //        queue.add(stringRequest);
 
 
     }
