@@ -27,7 +27,7 @@ import java.util.Map;
 
 public class CommentList extends ActionBarActivity {
 //    String URL="http://127.0.0.1:8000/";
-    String URL="http://10.0.2.2:8000/courses/course.json/cop290/threads";
+    String URL="";
     String course_code="cop290";
     String[] data_title;
     String[] data_desc;
@@ -38,6 +38,26 @@ public class CommentList extends ActionBarActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_comment_list);
+        Log.d("dds", "sta");
+        String data=getIntent().getStringExtra("data");
+        try {
+            JSONObject a=new JSONObject(data);
+            Log.d("check_comment",a.getJSONObject("user").toString());
+        }
+        catch (JSONException e1){
+            Log.d("check","failed to load data");
+        }
+
+//        String course_code=getIntent().getStringExtra("coursecode3");
+//        URL="/courses/course.json/"+course_code+"/thread";
+
+//        Request1 req=new Request1(new Intent(this,NewThread.class),this,URL);
+//        req.request();
+//        while(req.data==null){
+//
+//        }
+//        Log.d("cfeeee",req.data.toString());
+//        JSONObject data=req.data;
         String[] t={"d","d","d","d"};
         String[] d={"d","d","d","d"};
         CustomListAdapter a=new CustomListAdapter(this,t,d);
@@ -52,7 +72,7 @@ public class CommentList extends ActionBarActivity {
             }
         });
 //        l.OnItemClickListener();
-//        String course_code=getIntent().getStringExtra("course_code");
+//        String course_code=getIntent().getStringExtra("coursecode3");
 //        URL+="courses/course.json/"+course_code+"/threads";
         Log.d("ds", "d" + ":" + URL);
         StringRequest stringRequest = new StringRequest(Request.Method.GET, URL, new Response.Listener<String>() {
@@ -61,6 +81,35 @@ public class CommentList extends ActionBarActivity {
                 //add the logic after recieving the data
                 try {
                     Log.d("response",string);
+                    String URL="http://10.192.57.72:8000/courses/course.json/cop290/threads";
+//                    JSONObject data = new JSONObject("s");
+                    Log.d("check_comment","do");
+                    StringRequest stringRequest = new StringRequest(Request.Method.GET, URL, new Response.Listener<String>() {
+                        @Override
+                        public void onResponse(String string) {
+                            //add the logic after recieving the data
+                            try {
+                                Log.d("response_courses",string);
+
+                                JSONObject data = new JSONObject("s");
+                            }
+                            catch (JSONException e){
+                                Log.d("check","error in getting the threads");
+                            }
+
+                        }
+                    }, new Response.ErrorListener() {
+                        @Override
+                        public void onErrorResponse(VolleyError string) {
+                            Log.d("check",string.toString());
+
+                        }
+
+                        ;
+                    });
+                    //the following is the global request queue to prevent construction of
+                    // request queue again and again
+                    SingletonNetworkClass.getInstance(CommentList.this).addToRequestQueue(stringRequest);
                     JSONObject data = new JSONObject("s");
                 }
                 catch (JSONException e){

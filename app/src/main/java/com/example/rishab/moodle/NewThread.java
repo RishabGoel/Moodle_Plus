@@ -26,7 +26,7 @@ public class NewThread extends ActionBarActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_new_thread);
-        course_code=getIntent().getStringExtra("course_code");
+//        course_code=getIntent().getStringExtra("course_code");
     }
 
     @Override
