@@ -42,6 +42,26 @@
             android:name=".NewThreadComment"
             android:label="@string/title_activity_new_thread_comment" >
         </activity>
+        <activity
+            android:name=".Course_Template"
+            android:label="Course Components" >
+        </activity>
+        <activity
+            android:name=".Course_Assignments"
+            android:label="Course Assignments" >
+        </activity>
+        <activity
+            android:name=".Course_Grade"
+            android:label="Course_Grade" >
+        </activity>
+        <activity
+            android:name=".Assignment_Detail"
+            android:label="Assignment_Detail" >
+        </activity>
+        <activity
+            android:name=".All_Grades"
+            android:label="All_Grades" >
+        </activity>
     </application>
 
 </manifest>
