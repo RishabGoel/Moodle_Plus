@@ -29,7 +29,7 @@ import java.util.Map;
 public class CommentList extends ActionBarActivity {
 //    String URL="http://127.0.0.1:8000/";
     String URL="";
-    String course_code="cop290";
+    String course_code;
     String[] data_title;
     String[] data_desc;
     String[] data_id;
@@ -41,6 +41,7 @@ public class CommentList extends ActionBarActivity {
         setContentView(R.layout.activity_comment_list);
         Log.d("dds", "sta");
         String data=getIntent().getStringExtra("data");
+        course_code=getIntent().getStringExtra("coursecode3");
         try {
             JSONObject a=new JSONObject(data);
             JSONArray data_recv = a.getJSONArray("course_threads");
@@ -80,7 +81,7 @@ public class CommentList extends ActionBarActivity {
                 Log.d("thread pressed","sds");
                 Intent intent=new Intent(CommentList.this,ThreadComments.class);
                 intent.putExtra("id",idd);
-                Re a=new Re(intent,CommentList.this,"/threads/thread.json/"+idd);
+                Re a=new Re(intent,CommentList.this,"/threads/thread.json/"+idd,1);
                 a.request();
 //                Intent intent=new Intent(CommentList.this,ThreadComments.class);
 //                intent.putExtra("id",idd);
@@ -170,9 +171,10 @@ public class CommentList extends ActionBarActivity {
 
         return super.onOptionsItemSelected(item);
     }
-    public void creatThread(View view){
+    public void createThread(View view){
         Intent intent=new Intent(CommentList.this,NewThread.class);
-        intent.putExtra("course_code",course_code);
+        intent.putExtra("course_code", course_code);
+
         startActivity(intent);
     }
 }

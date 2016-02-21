@@ -7,4 +7,10 @@
     <string name="title_activity_new_thread">NewThread</string>
     <string name="title_activity_thread_comments">ThreadComments</string>
     <string name="title_activity_new_thread_comment">NewThreadComment</string>
+    <string name="username">Username</string>
+    <string name="password">Password</string>
+    <string name="title_activity_course_list">CourseList</string>
+    <string name="title_activity_notifications">Notifications</string>
+    <string name="title_activity_kunal">KunalActivity</string>
+
 </resources>

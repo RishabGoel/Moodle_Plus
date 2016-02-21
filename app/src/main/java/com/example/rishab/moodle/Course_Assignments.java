@@ -172,8 +172,8 @@ public class Course_Assignments extends ActionBarActivity {
                     e.printStackTrace();
                 }
 
-                Request1 req = new Request1(in,Course_Assignments.this,"");
-                req.request();
+//                Request1 req = new Request1(in,Course_Assignments.this,"");
+//                req.request();
                 //startActivity(in);
             }
         });

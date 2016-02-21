@@ -19,11 +19,12 @@ public class Re {
     Intent intent;
     String url="http://10.192.57.72:8000";
     String URL="http://10.192.57.72:8000/default/login.json?userid=vinay&password=vinay";
-    public Re(Intent i, Context c, String u){
+    int reqtype;
+    public Re(Intent i, Context c, String u, int t){
         context=c;
         url+=u;
         intent=i;
-
+        reqtype=t;
     }
     public void request() {
         Log.d("url",url);
@@ -32,11 +33,32 @@ public class Re {
             public void onResponse(String string) {
                 //add the logic after recieving the data
                 try {
+                    if (reqtype==0){
+                        JSONObject temp = new JSONObject(string);
+                        boolean success = temp.getBoolean("success");
+                        if(success==true){
+                            Intent courseList = new Intent(context,CourseList.class);
+                            Re login = new Re(courseList,context,"/courses/list.json",1);
+                            login.request();
+                        }
+                    }
+                    else if(reqtype==1){
+                        intent.putExtra("data", string);
+                        context.startActivity(intent);
+                    }
+                    else if(reqtype==3){
+                        String course_code=intent.getStringExtra("coursecode3");
+                        Re req=new Re(intent,context,"/courses/course.json/"+course_code+"/threads",1);
+                        req.request();
 
-                    Log.d("asd",string);
-                    intent.putExtra("data", string);
-                    context.startActivity(intent);
-                    JSONObject data = new JSONObject("s");
+                    }
+                    else{
+                        String a=intent.getStringExtra("id");
+                        Re req=new Re(intent,context,"/threads/thread.json/"+a,1);
+                        req.request();
+                    }
+
+                    JSONObject data = new JSONObject("{s:'s'}");
                 } catch (JSONException e) {
                     Log.d("check", "error in getting the threads");
                 }

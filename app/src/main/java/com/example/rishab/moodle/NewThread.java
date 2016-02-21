@@ -1,5 +1,6 @@
 package com.example.rishab.moodle;
 
+import android.content.Intent;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -26,7 +27,7 @@ public class NewThread extends ActionBarActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_new_thread);
-//        course_code=getIntent().getStringExtra("course_code");
+        course_code=getIntent().getStringExtra("course_code");
     }
 
     @Override
@@ -56,34 +57,10 @@ public class NewThread extends ActionBarActivity {
         String title=(String) editText.getText().toString();
         editText=(EditText)findViewById(R.id.Thread_Description);
         String description=(String) editText.getText().toString();
-        URL+="threads/new.json?title="+title+"&description="+description+"&course_code="+course_code;
-        StringRequest stringRequest = new StringRequest(Request.Method.GET, URL, new Response.Listener<String>() {
-            @Override
-            public void onResponse(String string) {
-                //add the logic after recieving the data
-                try {
-                    Log.d("response", string);
-                    JSONObject data = new JSONObject(string);
-                    //intent to start the show all threads activity
-                }
-                catch (JSONException e){
-                    Log.d("check","error in getting the threads");
-                }
-
-            }
-        }, new Response.ErrorListener() {
-            @Override
-            public void onErrorResponse(VolleyError string) {
-                Log.d("check",string.toString());
-
-            }
-
-            ;
-        });
-        //the following is the global request queue to prevent construction of
-        // request queue again and again
-        SingletonNetworkClass.getInstance(this).addToRequestQueue(stringRequest);
-        //        queue.add(stringRequest);
-
+        URL="/threads/new.json?title="+title+"&description="+description+"&course_code="+course_code;
+        Intent intent=new Intent(NewThread.this,CommentList.class);
+        intent.putExtra("coursecode3",course_code);
+        Re req=new Re(intent,NewThread.this,URL,3);
+        req.request();
     }
 }

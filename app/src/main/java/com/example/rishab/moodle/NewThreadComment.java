@@ -60,7 +60,8 @@ public class NewThreadComment extends ActionBarActivity {
         String desc=(String)editText.getText().toString();
         final String URL="/threads/post_comment.json?description="+desc+"&thread_id="+idd;
         Intent intent=new Intent(NewThreadComment.this,ThreadComments.class);
-        Re req=new Re(intent,NewThreadComment.this,URL);
+        intent.putExtra("id",idd);
+        Re req=new Re(intent,NewThreadComment.this,URL,2);
         req.request();
 
 

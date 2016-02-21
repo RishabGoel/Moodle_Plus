@@ -62,6 +62,17 @@
             android:name=".All_Grades"
             android:label="All_Grades" >
         </activity>
+        <activity
+            android:name=".CourseList"
+            android:label="@string/title_activity_course_list" >
+        </activity>
+        <activity
+            android:name=".LoginFailedPop"
+            android:theme="@style/AppTheme.customTheme" />
+        <activity
+            android:name=".Notifications"
+            android:label="@string/title_activity_notifications" >
+        </activity>
     </application>
 
 </manifest>

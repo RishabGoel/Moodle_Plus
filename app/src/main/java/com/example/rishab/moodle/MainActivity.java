@@ -1,10 +1,15 @@
 package com.example.rishab.moodle;
 
+import android.content.Context;
 import android.content.Intent;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.EditText;
+
+import org.json.JSONObject;
 
 
 public class MainActivity extends ActionBarActivity {
@@ -13,10 +18,7 @@ public class MainActivity extends ActionBarActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        Request1 req=new Request1(new Intent(this,CommentList.class),this,"dssdds");
-        req.request();
-//        Intent intent=new Intent(this,CommentList.class);
-//        startActivity(intent);
+        setTitle("Moodle: Login");
     }
 
     @Override
@@ -34,10 +36,53 @@ public class MainActivity extends ActionBarActivity {
         int id = item.getItemId();
 
         //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
+        if (id == R.id.action_exit) {
+            finish();
             return true;
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+
+
+
+    public void sendLoginRequest(View view) {
+
+        String username = ((EditText)findViewById(R.id.editTextUsername)).getText().toString();
+        String password = ((EditText)findViewById(R.id.editTextPassword)).getText().toString();
+
+        String requestUrl = "/default/login.json?userid="+username.toString()+"&password="+password.toString();
+        System.out.println(requestUrl);
+        //String responseString = rishabsFunction(requestUrl);
+
+        //Replace this by rishabsFunction(requestUrl);
+         /*boolean success = false;
+        try {
+            //JSONObject responseObject = new JSONObject(responseString);
+            JSONObject responseObject = new JSONObject();
+            responseObject.put("success",true);
+            success = responseObject.getBoolean("success");
+        }
+
+
+        catch(org.json.JSONException exception){
+            //startActivity(new Intent(MainActivity.this,LoginFailedPop.class));
+            // how you handle the exception
+            // e.printStackTrace();
+        }
+
+        if(!success){
+            //System.out.println("Login Failed");
+            startActivity(new Intent(MainActivity.this,LoginFailedPop.class));
+        }
+        else startActivity(new Intent(MainActivity.this,CourseList.class));
+        // Do something in response to button click
+        */
+
+
+        Intent target = new Intent(MainActivity.this,CourseList.class);
+        Re q = new Re(target,MainActivity.this,requestUrl,0);
+        q.request();
     }
 }

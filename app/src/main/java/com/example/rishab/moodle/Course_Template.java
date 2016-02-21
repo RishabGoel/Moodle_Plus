@@ -46,7 +46,7 @@ public class Course_Template extends ActionBarActivity {
                         //use JSON object
                         Intent intent_s = new Intent(Course_Template.this, Course_Assignments.class);//
                         intent_s.putExtra("coursecode1", message);//course code message
-                        Request1 req = new Request1(intent_s,Course_Template.this,"/courses/course.json/"+message+"/assignment");//course assignment api
+                        Re req = new Re(intent_s,Course_Template.this,"/courses/course.json/"+message+"/assignment",1);//course assignment api
                         req.request();
                         //startActivity(intent_s);
                     }
@@ -66,7 +66,7 @@ public class Course_Template extends ActionBarActivity {
                         //use JSON object
                         Intent intent_s = new Intent(Course_Template.this, Course_Grade.class);
                         intent_s.putExtra("coursecode2", message);//course code message
-                        Request1 req = new Request1(intent_s,Course_Template.this,"/courses/course.json/"+message+"/grades");//course grade api
+                        Re req = new Re(intent_s,Course_Template.this,"/courses/course.json/"+message+"/grades",1);//course grade api
                         req.request();
                         //startActivity(intent_s);
                     }
@@ -86,7 +86,7 @@ public class Course_Template extends ActionBarActivity {
                         //use JSON object
                         Intent intent_s = new Intent(Course_Template.this, CommentList.class);
                         intent_s.putExtra("coursecode3", message);//course code message
-                        Request1 req = new Request1(intent_s,Course_Template.this,"/courses/course.json/"+message+"/threads");//course threads api
+                        Re req = new Re(intent_s,Course_Template.this,"/courses/course.json/"+message+"/threads",1);//course threads api
                         req.request();
                         //startActivity(intent_s);
                     }

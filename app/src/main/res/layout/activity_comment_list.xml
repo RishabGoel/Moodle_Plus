@@ -16,7 +16,7 @@
         android:layout_height="wrap_content"
         android:translationZ="10dp"
         android:text="Create new Thread"
-        android:id="@+id/new_thread"
+
         android:onClick="createThread" />
 
 </LinearLayout>
