@@ -1,4 +1,4 @@
-package com.example.rishab.moodle;
+package com.venturex.parasgupta.myapplication;
 
 /**
  * Created by Paras Gupta on 20-02-2016.
@@ -17,18 +17,23 @@ public class EncodeNotificationDescription{
         int it = 0;
 
         boolean flag1=false,flag2=false;
-
+        int ctr = 0;
         while(it<length){
 
             if(s.charAt(it)=='>'||s.charAt(it)=='<')	{	flag1^=true;	if(flag1==false)	i++;	}
             else if(s.charAt(it)=='\'')	{	flag2^=true;	if(flag2==true)	j++;	}
             else {
                 if(flag1==false)	display+=s.charAt(it);
-                if(flag2==true&&j==1)	link+=s.charAt(it);
+                if(s.charAt(it)=='/') ctr++;
+                else if(ctr==7&&flag2==true&&j==1)	link+=s.charAt(it);
+
             }
 
             it++;
         }
+
+        System.out.println("hello"+link+"khkjhkj");
+        System.out.println(ctr);
         res.display = display;
         res.link = link;
         return res;

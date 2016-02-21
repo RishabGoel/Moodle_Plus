@@ -18,7 +18,7 @@ public class Notifications extends ActionBarActivity {
 
     ListView listView;
     String[] description,createdAt;
-    int[] userId,isSeen,id;
+    String[] userId,isSeen,threadId;
     String[] link,display;
 
     @Override
@@ -51,14 +51,15 @@ public class Notifications extends ActionBarActivity {
             description = new String[size];
             link = new String[size];
             display = new String[size];
+            threadId = new String[size];
 
             for (int i = 0; i < size; i++) {
                 JSONObject temp = notificationsArray.getJSONObject(i);
                 description[i] = temp.getString("description");
-                isSeen[i] = temp.getInt("is_seen");
-                createdAt[i] = temp.getString("created_at");
-                id[i] = temp.getInt("id");
-                userId[i] = temp.getInt("user_id");
+                //isSeen[i] = temp.getInt("is_seen");
+                //createdAt[i] = temp.getString("created_at");
+               // threadId[i] = temp.getInt("id");
+                //userId[i] = temp.getInt("user_id");
             }
 
             // description[0] = "<a href='/users/user/1'>Shubham Jindal</a> posted a new <a href='/threads/thread/3'>thread</a> for <a href='/courses/course/col380'>col380</a>.";
@@ -67,8 +68,10 @@ public class Notifications extends ActionBarActivity {
             for (int i = 0; i < size; i++) {
                 NotificationEncodedObject temp = new NotificationEncodedObject();
                 temp = EncodeNotificationDescription.encode(description[i]);
-                link[i] = temp.link;
+                link[i] = "/threads/thread.json/"+temp.link;
+                threadId[i] = temp.link;
                 display[i] = temp.display;
+                //link[i] = "/threads/thread.json/"+link[i].charAt([link[i].length()-1];
             }
 
             listView = (ListView) findViewById(R.id.list_notifications);
@@ -85,9 +88,9 @@ public class Notifications extends ActionBarActivity {
                     startActivity(intent);*/
 
                     Intent target = new Intent(Notifications.this,ThreadComments.class);
+                    target.putExtra("id",threadId[position]);
                     Re q3 = new Re(target,Notifications.this,link[position],1);
                     q3.request();
-
 
                 }
             });
