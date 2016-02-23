@@ -31,24 +31,17 @@ public class Course_Template extends ActionBarActivity {
         final String message = intent_r.getStringExtra("coursecode");//Receiving course code as the identifier
         t.setText(message);//setting course code on top
 
-        //String server = "localhost:8000";
-        //Json_Returning obj = new Json_Returning;
+
         //Assignment button intended to lead to list of assignments related to course
 
         button1.setOnClickListener(
                 new Button.OnClickListener(){
                     public void onClick(View v){
-                            //Assignments
-                        //Intent intent_r = getIntent();
-                        //String message = intent_r.getStringExtra("coursecode");
-                        //String URL = server + "/courses/course.json/coursecode/assignment";
-                        //JSONObject data_received = obj.Data_Received(URL);
-                        //use JSON object
                         Intent intent_s = new Intent(Course_Template.this, Course_Assignments.class);//
                         intent_s.putExtra("coursecode1", message);//course code message
-                        Re req = new Re(intent_s,Course_Template.this,"/courses/course.json/"+message+"/assignment",1);//course assignment api
+                        Re req = new Re(intent_s,Course_Template.this,"/courses/course.json/"+message+"/assignments",1);//course assignment api
                         req.request();
-                        //startActivity(intent_s);
+
                     }
                 }
         );
@@ -58,17 +51,12 @@ public class Course_Template extends ActionBarActivity {
         button2.setOnClickListener(
                 new Button.OnClickListener(){
                     public void onClick(View v){
-                            //Grades
-                        //Intent intent_r = getIntent();
-                        //String message = intent_r.getStringExtra("coursecode");
-                        //String URL = server + "/courses/course.json/coursecode/grades";
-                        //JSONObject data_received = obj.Data_Received(URL);
-                        //use JSON object
+
                         Intent intent_s = new Intent(Course_Template.this, Course_Grade.class);
                         intent_s.putExtra("coursecode2", message);//course code message
                         Re req = new Re(intent_s,Course_Template.this,"/courses/course.json/"+message+"/grades",1);//course grade api
                         req.request();
-                        //startActivity(intent_s);
+
                     }
                 }
         );
@@ -78,12 +66,7 @@ public class Course_Template extends ActionBarActivity {
         button3.setOnClickListener(
                 new Button.OnClickListener(){
                     public void onClick(View v){
-                            //Threads
-                        //Intent intent_r = getIntent();
-                        //String message = intent_r.getStringExtra("coursecode");
-                        //String URL = server + "/courses/course.json/coursecode/threads";
-                        //JSONObject data_received = obj.Data_Received(URL);
-                        //use JSON object
+
                         Intent intent_s = new Intent(Course_Template.this, CommentList.class);
                         intent_s.putExtra("coursecode3", message);//course code message
                         Re req = new Re(intent_s,Course_Template.this,"/courses/course.json/"+message+"/threads",1);//course threads api
@@ -110,8 +93,27 @@ public class Course_Template extends ActionBarActivity {
         int id = item.getItemId();
 
         //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
+        /*if (id == R.id.action_settings) {
             return true;
+        }*/
+
+        switch(id){
+            case R.id.action_grades:
+                Intent target1 = new Intent(Course_Template.this,All_Grades.class);
+                Re q1 = new Re(target1,Course_Template.this,"/default/grades.json",1);
+                q1.request();
+                break;
+            case R.id.action_notifications:
+                Intent target2 = new Intent(Course_Template.this,Notifications.class);
+                Re q2 = new Re(target2,Course_Template.this,"/default/notifications.json",1);
+                q2.request();
+                break;
+            case R.id.action_logout:
+                Intent target3 = new Intent(Course_Template.this,MainActivity.class);
+                Re q3 = new Re(target3,Course_Template.this,"/default/logout.json",1);
+                q3.request();
+                break;
+            default: break;
         }
 
         return super.onOptionsItemSelected(item);

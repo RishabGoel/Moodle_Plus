@@ -1,9 +1,14 @@
-package com.venturex.parasgupta.myapplication;
+package com.example.rishab.moodle;
 
 /**
  * Created by Paras Gupta on 20-02-2016.
  */
 public class EncodeNotificationDescription{
+
+    /*funciton to retrive the address to the json object corresponding to
+    the thread by encoding hyperlink address into the address corresponding
+    to the json object.
+     */
 
     public static NotificationEncodedObject encode(String s){
 

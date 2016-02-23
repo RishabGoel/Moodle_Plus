@@ -9,6 +9,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
+import android.widget.TextView;
 
 import com.android.volley.Request;
 import com.android.volley.Response;
@@ -30,6 +31,12 @@ public class ThreadComments extends ActionBarActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_thread_comments);
         String id=getIntent().getStringExtra("id");
+        String titl=getIntent().getStringExtra("title");
+        String des=getIntent().getStringExtra("description");
+        TextView t=(TextView)findViewById(R.id.title_thread);
+        t.setText(titl);
+        t=(TextView)findViewById(R.id.desc_thread);
+        t.setText(des);
         t_id=id;
         try {
             JSONObject data=new JSONObject(getIntent().getStringExtra("data"));
@@ -83,8 +90,27 @@ public class ThreadComments extends ActionBarActivity {
         int id = item.getItemId();
 
         //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
+        /*if (id == R.id.action_settings) {
             return true;
+        }*/
+
+        switch(id){
+            case R.id.action_grades:
+                Intent target1 = new Intent(ThreadComments.this,All_Grades.class);
+                Re q1 = new Re(target1,ThreadComments.this,"/default/grades.json",1);
+                q1.request();
+                break;
+            case R.id.action_notifications:
+                Intent target2 = new Intent(ThreadComments.this,Notifications.class);
+                Re q2 = new Re(target2,ThreadComments.this,"/default/notifications.json",1);
+                q2.request();
+                break;
+            case R.id.action_logout:
+                Intent target3 = new Intent(ThreadComments.this,MainActivity.class);
+                Re q3 = new Re(target3,ThreadComments.this,"/default/logout.json",1);
+                q3.request();
+                break;
+            default: break;
         }
 
         return super.onOptionsItemSelected(item);

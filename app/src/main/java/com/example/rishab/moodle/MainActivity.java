@@ -45,44 +45,16 @@ public class MainActivity extends ActionBarActivity {
     }
 
 
-
-
     public void sendLoginRequest(View view) {
 
-        String username = ((EditText)findViewById(R.id.editTextUsername)).getText().toString();
-        String password = ((EditText)findViewById(R.id.editTextPassword)).getText().toString();
+        String username = ((EditText) findViewById(R.id.editTextUsername)).getText().toString();
+        String password = ((EditText) findViewById(R.id.editTextPassword)).getText().toString();
 
-        String requestUrl = "/default/login.json?userid="+username.toString()+"&password="+password.toString();
+        String requestUrl = "/default/login.json?userid=" + username.toString() + "&password=" + password.toString();
         System.out.println(requestUrl);
-        //String responseString = rishabsFunction(requestUrl);
 
-        //Replace this by rishabsFunction(requestUrl);
-         /*boolean success = false;
-        try {
-            //JSONObject responseObject = new JSONObject(responseString);
-            JSONObject responseObject = new JSONObject();
-            responseObject.put("success",true);
-            success = responseObject.getBoolean("success");
-        }
-
-
-        catch(org.json.JSONException exception){
-            //startActivity(new Intent(MainActivity.this,LoginFailedPop.class));
-            // how you handle the exception
-            // e.printStackTrace();
-        }
-
-        if(!success){
-            //System.out.println("Login Failed");
-            startActivity(new Intent(MainActivity.this,LoginFailedPop.class));
-        }
-        else startActivity(new Intent(MainActivity.this,CourseList.class));
-        // Do something in response to button click
-        */
-
-
-        Intent target = new Intent(MainActivity.this,CourseList.class);
-        Re q = new Re(target,MainActivity.this,requestUrl,0);
+        Intent target = new Intent(MainActivity.this, CourseList.class);
+        Re q = new Re(target, MainActivity.this, requestUrl, 0);
         q.request();
     }
 }

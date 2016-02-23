@@ -4,9 +4,6 @@
     tools:context="com.venturex.parasgupta.myapplication.CourseList">
     <item android:id="@+id/action_notifications" android:title="Notifications"
         android:orderInCategory="100" app:showAsAction="never" />
-    <item android:id="@+id/action_assignments" android:title="Assignments"
-        android:orderInCategory="100" app:showAsAction="never" />
-    <item android:id="@+id/action_threads" android:title="Threads"
         android:orderInCategory="100" app:showAsAction="never" />
     <item android:id="@+id/action_grades" android:title="Grades"
         android:orderInCategory="100" app:showAsAction="never" />

@@ -1,62 +1,51 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:weightSum="1"
-    android:background="@mipmap/background">
+    android:background="#fff"
+    android:orientation="vertical"
+    android:weightSum="1">
 
     <TextView
+        android:id="@+id/t1"
         android:layout_width="wrap_content"
         android:layout_height="50dp"
-        android:id="@+id/t1"
         android:layout_gravity="center_horizontal"
-        android:textSize="40dp" />
+        android:textSize="35dp" />
 
     <ImageButton
-        android:layout_width="300dp"
-        android:layout_height="110dp"
         android:id="@+id/b1"
-        android:layout_gravity="center_horizontal"
-        android:layout_marginTop="10dp"
-        android:src="@mipmap/assignment2" />
-
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="30dp"
-        android:text="Assignment"
-        android:id="@+id/textView2"
-        android:layout_gravity="center_horizontal"
-        android:textSize="30dp" />
-
-    <ImageButton
         android:layout_width="320dp"
         android:layout_height="110dp"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="20dp"
+        android:layout_weight="0.03"
+        android:adjustViewBounds="false"
+        android:background="#e0f7fa"
+        android:scaleType="fitXY"
+        android:src="@mipmap/assign_skdljfsldfjslkdfjslkfj" />
+
+
+    <ImageButton
         android:id="@+id/b2"
-        android:layout_gravity="center_horizontal"
-        android:layout_marginTop="20dp"
-        android:src="@mipmap/grades2" />
-
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="30dp"
-        android:text="Grade"
-        android:id="@+id/textView3"
-        android:layout_gravity="center_horizontal"
-        android:textSize="30dp" />
-
-    <ImageButton
         android:layout_width="320dp"
         android:layout_height="110dp"
-        android:id="@+id/b3"
         android:layout_gravity="center_horizontal"
-        android:layout_marginTop="20dp"
-        android:src="@mipmap/threads" />
+        android:layout_marginTop="40dp"
+        android:background="#e0f7fa"
+        android:scaleType="fitXY"
+        android:src="@mipmap/grades" />
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="30dp"
-        android:text="Threads"
-        android:id="@+id/textView4"
+
+    <ImageButton
+        android:id="@+id/b3"
+        android:layout_width="320dp"
+        android:layout_height="110dp"
         android:layout_gravity="center_horizontal"
-        android:textSize="30dp" />
+        android:layout_marginTop="40dp"
+        android:background="#e0f7fa"
+        android:scaleType="fitXY"
+        android:src="@mipmap/thread" />
+
+
 </LinearLayout>

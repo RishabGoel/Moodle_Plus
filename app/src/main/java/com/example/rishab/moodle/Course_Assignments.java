@@ -34,7 +34,8 @@ public class Course_Assignments extends ActionBarActivity {
     final static String Deadline = "deadline";
     final static String Id = "id";
     final static String Description = "description";
-    final static String Assignments = "assignment";
+    final static String Assignments = "assignments";
+    String description = "";
 
 
     ArrayList<HashMap<String, String>> assignmentList;
@@ -46,22 +47,16 @@ public class Course_Assignments extends ActionBarActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_course__assignments);
-        ListView listView = (ListView)findViewById(R.id.list);
+        ListView listView = (ListView) findViewById(R.id.list);
 
         Intent intent_r = getIntent();
         String message = intent_r.getStringExtra("coursecode1");//course code message
         JSONObject data_received = new JSONObject();//JSON Object which will be parsed throughout this assignment
         String js = intent_r.getStringExtra("data");//receiving string form of JSON object
-        //String URL = "/courses/course.json/"+message+"/assignment";
-        //Request a = new Request(this,URL);
-        //a.request();
-        //while(a.data==null){}
-        try
-        {
+
+        try {
             data_received = new JSONObject(js);//type casting to JSON object
-        }
-        catch(JSONException e)
-        {
+        } catch (JSONException e) {
             e.printStackTrace();
         }
         //String data_string = data_received.toString();
@@ -69,17 +64,14 @@ public class Course_Assignments extends ActionBarActivity {
 
         assignmentList = new ArrayList<HashMap<String, String>>();
 
-        ListView lv = (ListView)findViewById(R.id.list);
+        ListView lv = (ListView) findViewById(R.id.list);
         //private static final String Name = "name";
-        if(data_received!=null)
-        {
-            try
-            {
+        if (data_received != null) {
+            try {
                 ass = data_received.getJSONArray(Assignments);
 
                 //looping through various JSON objects of assignment
-                for (int i = 0; i < ass.length(); i++)
-                {
+                for (int i = 0; i < ass.length(); i++) {
 
                     JSONObject c = ass.getJSONObject(i);
 
@@ -91,8 +83,7 @@ public class Course_Assignments extends ActionBarActivity {
                     final String type = Integer.toString(c.getInt(Type));
                     final String deadline = c.getString(Deadline);
                     final String id = Integer.toString(c.getInt(Id));
-                    final String description = (Jsoup.parse(c.getString("description")).text());//parsing HTML string
-
+                    description = (Jsoup.parse(c.getString("description")).text());//parsing HTML string
                     HashMap<String, String> contact = new HashMap<String, String>();
 
                     contact.put(Name, name);
@@ -107,38 +98,16 @@ public class Course_Assignments extends ActionBarActivity {
                                     Course_Assignments.this,
                                     assignmentList,
                                     R.layout.list_item,
-                                    new String[] { Name, Deadline, Id },
-                                    new int[] { R.id.assignment_number, R.id.submission_date, R.id.status }
+                                    new String[]{Name, Deadline, Id},
+                                    new int[]{R.id.assignment_number, R.id.submission_date, R.id.status}
                             );
 
-                    /*lv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-                        @Override
-                        public void onItemClick(AdapterView<?> parent, View view, int position, long d) {
-                            Intent in = new Intent(getApplicationContext(), Assignment_Detail.class);
-                            in.putExtra(Id,id);
-                            in.putExtra(Deadline,deadline);
-                            in.putExtra(Description,description);
-                            in.putExtra(Late,late);
-                            in.putExtra(CreatedAt,createdat);
-                            in.putExtra(Type,type);
-                            in.putExtra(CourseId,courseid);
-                            in.putExtra(Name,name);
-                            in.putExtra(File,file);
-                            startActivity(in);
-                        }
-                    });*/
                     lv.setAdapter(adapter);
                 }
-            }
-
-            catch(JSONException E)
-            {
+            } catch (JSONException E) {
                 E.printStackTrace();
             }
-        }
-
-        else
-        {
+        } else {
             Log.e("ServiceHandler", "Couldn't get any data from the url");
         }
 
@@ -147,7 +116,6 @@ public class Course_Assignments extends ActionBarActivity {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long d) {
                 Intent in = new Intent(getApplicationContext(), Assignment_Detail.class);
-
                 try
 
                 {
@@ -155,26 +123,22 @@ public class Course_Assignments extends ActionBarActivity {
                     JSONObject o = ass.getJSONObject(position);
 
                     //putting data into next activity
-                    in.putExtra(Id,Integer.toString(o.getInt("id")));
-                    in.putExtra(Deadline,o.getString("deadline"));
-                    in.putExtra(Description,o.getString(Jsoup.parse(o.getString("description")).text()));
-                    in.putExtra(Late,Integer.toString(o.getInt("late_days_allowed")));
-                    in.putExtra(CreatedAt,o.getString("created_at"));
-                    in.putExtra(Type,Integer.toString(o.getInt("type_")));
-                    in.putExtra(CourseId,Integer.toString(o.getInt("registered_course_id")));
-                    in.putExtra(Name,o.getString("name"));
-                    in.putExtra(File,o.getString("file"));
+                    in.putExtra(Id, Integer.toString(o.getInt("id")));
+                    in.putExtra(Deadline, o.getString("deadline"));
+                    //in.putExtra(Description,o.getString(Jsoup.parse(o.getString("description")).text()));
+                    in.putExtra(Description, description);
+                    in.putExtra(Late, Integer.toString(o.getInt("late_days_allowed")));
+                    in.putExtra(CreatedAt, o.getString("created_at"));
+                    in.putExtra(Type, Integer.toString(o.getInt("type_")));
+                    in.putExtra(CourseId, Integer.toString(o.getInt("registered_course_id")));
+                    in.putExtra(Name, o.getString("name"));
+//                    in.putExtra(File, o.getString("file"));
 
-                }
-
-                catch(JSONException e)
-                {
+                } catch (JSONException e) {
                     e.printStackTrace();
                 }
 
-//                Request1 req = new Request1(in,Course_Assignments.this,"");
-//                req.request();
-                //startActivity(in);
+                startActivity(in);
             }
         });
 
@@ -196,10 +160,29 @@ public class Course_Assignments extends ActionBarActivity {
         int id = item.getItemId();
 
         //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
+        /*if (id == R.id.action_settings) {
             return true;
-        }
+        }*/
 
+        switch (id) {
+            case R.id.action_grades:
+                Intent target1 = new Intent(Course_Assignments.this, All_Grades.class);
+                Re q1 = new Re(target1, Course_Assignments.this, "/default/grades.json", 1);
+                q1.request();
+                break;
+            case R.id.action_notifications:
+                Intent target2 = new Intent(Course_Assignments.this, Notifications.class);
+                Re q2 = new Re(target2, Course_Assignments.this, "/default/notifications.json", 1);
+                q2.request();
+                break;
+            case R.id.action_logout:
+                Intent target3 = new Intent(Course_Assignments.this, MainActivity.class);
+                Re q3 = new Re(target3, Course_Assignments.this, "/default/logout.json", 1);
+                q3.request();
+                break;
+            default:
+                break;
+        }
         return super.onOptionsItemSelected(item);
     }
 }

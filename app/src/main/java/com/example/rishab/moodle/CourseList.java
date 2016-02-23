@@ -2,6 +2,7 @@ package com.example.rishab.moodle;
 
 import android.app.ListActivity;
 import android.content.Intent;
+import android.graphics.Paint;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.view.Menu;
@@ -23,32 +24,25 @@ public class CourseList extends ActionBarActivity {
 
     ListView listView;
 
-    String[] courseCode, courseName, courseDesc,courseSchedule;
+    String[] courseCode, courseName, courseDesc,courseSchedule; //arrays containing details extracted from course list json object
     int[] courseCredits,courseId;
     int year,semester;
 
 
     @Override
+
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setTitle("Moodle: Course Overview");
+        setTitle("Moodle: Course LIST");
+
         setContentView(R.layout.activity_course_list);
-        //String requestUrl = "/courses/list.json";
+
         Intent intent = getIntent();
         String stringResponse = intent.getStringExtra("data");
 
-
-
-        //Replace this by RishabsFunction(requestURL) function
         JSONArray courses;
         try {
-            // JSONObject courseList = new JSONObject(stringResponse);
             JSONObject courseList = new JSONObject(stringResponse);
-
-
-
-            //startActivity(new Intent(CourseList.this, LoginFailedPop.class));
-            //Remove above
             courses = courseList.getJSONArray("courses");
 
             int length = 1;
@@ -98,12 +92,11 @@ public class CourseList extends ActionBarActivity {
             t=(TextView)findViewById(R.id.labelText);
             t.setText(pageLabel);
 
-            final String[] codes = {"COL100","COP290","COL106"};
-            String[] names = {"Introduction to Computer Science","Design Practices in Computer Science","Data Structures and Algorithms"};
-
 
             final String[] listLabels = new String[length];
             for(int i=0;i<length;i++)    listLabels[i] = courseCode[i] + ": "+ courseName[i];
+
+            //listview generated dynamically using the extracted details from the courselist json object
 
             listView = (ListView) findViewById(R.id.list);
             ArrayAdapter<String> addapter = new ArrayAdapter<String>(listView.getContext(),android.R.layout.simple_list_item_1,listLabels);
@@ -123,17 +116,11 @@ public class CourseList extends ActionBarActivity {
         }
 
         catch(org.json.JSONException exception){
-            // how you handle the exception
-            // e.printStackTrace();
         }
-
-
-
     }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.menu_course_list, menu);
         return true;
     }
@@ -149,6 +136,8 @@ public class CourseList extends ActionBarActivity {
         /*if (id == R.id.action_settings) {
             return true;
         }*/
+
+        //Switch for the response according to the selected item from the menu
 
         switch(id){
             case R.id.action_grades:
@@ -171,4 +160,3 @@ public class CourseList extends ActionBarActivity {
         return super.onOptionsItemSelected(item);
     }
 }
-

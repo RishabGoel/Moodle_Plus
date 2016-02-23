@@ -1,22 +1,42 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical" android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#fff"
+    android:orientation="vertical">
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="5dp"
+        android:background="#000" />
 
     <TextView
+        android:id="@+id/labelText"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Notifications\n"
-        android:textSize="20dp"
-        android:id="@+id/labelText"
-        android:layout_gravity="center"/>
+        android:layout_gravity="center"
+        android:layout_marginTop="20dp"
+        android:text="@string/notifications"
+        android:textColor="#000"
+        android:textSize="20dp" />
 
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="5dp"
+        android:background="#000" />
 
     <ListView
+        android:id="@+id/list_notifications"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/list_notifications"
+        android:divider="#000000"
+        android:dividerHeight="5dp"
         android:drawSelectorOnTop="true"
         android:touchscreenBlocksFocus="true" />
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="5dp"
+        android:background="#000" />
 
 </LinearLayout>

@@ -1,24 +1,25 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent" android:layout_height="match_parent"
-    android:background="#03ff2221">
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#00000000">
 
     <TextView
+        android:id="@+id/textView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Invalid Login Request!"
-        android:id="@+id/textView"
-        android:textSize="20dp"
+        android:layout_centerHorizontal="true"
         android:layout_centerVertical="true"
-        android:layout_centerHorizontal="true" />
+        android:text="Invalid Login Request!"
+        android:textSize="20dp" />
 
     <Button
+        android:id="@+id/button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Login again"
-        android:id="@+id/button"
-        android:layout_marginTop="20dp"
         android:layout_below="@+id/textView"
         android:layout_centerHorizontal="true"
-        android:onClick="finishButton"/>
+        android:layout_marginTop="20dp"
+        android:onClick="finishButton"
+        android:text="Login again" />
 </RelativeLayout>

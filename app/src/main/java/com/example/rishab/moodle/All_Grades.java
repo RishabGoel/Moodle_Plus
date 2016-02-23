@@ -24,31 +24,28 @@ public class All_Grades extends ActionBarActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_all__grades);
-        ListView listView = (ListView)findViewById(R.id.list2);
+        ListView listView = (ListView) findViewById(R.id.list2);
 
         //receiving the object JSON
         Intent intent_r = getIntent();
         JSONObject data_received = new JSONObject();
         String js = intent_r.getStringExtra("data");
-        try{data_received = new JSONObject(js);}
-        catch(JSONException e)
-        {
+        try {
+            data_received = new JSONObject(js);
+        } catch (JSONException e) {
             e.printStackTrace();
         }
 
-        //String URL = "/default/grades.json";
-        //Request a = new Request(this,URL);
-        //a.request();
-        //while(a.data==null){}
-        //JSONObject data_received = a.data;
         ArrayList<HashMap<String, String>> gradelist = new ArrayList<HashMap<String, String>>();
         String newline = System.getProperty("line.separator");//to skip to next line
 
-        int no_of_courses=0;
+        int no_of_courses = 0;
 
         int[] ids = new int[20];//it will later serve as boolean to the course which are presently there
 
-        for(int i=0;i<20;i++){ids[i]=-1;}//setting them false so to say
+        for (int i = 0; i < 20; i++) {
+            ids[i] = -1;
+        }//setting them false so to say
 
         float[] current_scores = new float[20];//to keep track of current actual score in the course
 
@@ -56,27 +53,24 @@ public class All_Grades extends ActionBarActivity {
 
         String[] codes = new String[20];//the code of a course
 
-        if(data_received!=null)
-        {
-            try
-            {
+        if (data_received != null) {
+            try {
                 JSONArray courses = data_received.getJSONArray("courses");//array of courses
 
                 //looping through various objects of courses which may have same ids
 
                 //loop to set boolean value so to say
 
-                for(int i=0;i<courses.length();i++)
-                {
+                for (int i = 0; i < courses.length(); i++) {
 
                     JSONObject c = courses.getJSONObject(i);
 
                     int id = c.getInt("id");//id of the course
 
-                    if(!(ids[id]==id))//checking if that id is not set yet
+                    if (!(ids[id] == id))//checking if that id is not set yet
                     {
                         no_of_courses++;
-                        ids[id]=id;
+                        ids[id] = id;
                         codes[id] = c.getString("code");
                     }
                 }
@@ -85,8 +79,7 @@ public class All_Grades extends ActionBarActivity {
 
                 //looping to see accumulate score of various courses
 
-                for(int i=0;i<grd.length();i++)
-                {
+                for (int i = 0; i < grd.length(); i++) {
 
                     JSONObject c = grd.getJSONObject(i);
 
@@ -100,9 +93,9 @@ public class All_Grades extends ActionBarActivity {
 
                     float score = BigDecimal.valueOf(c.getDouble("score")).floatValue();//pseudo scored
 
-                    float ratio = weight/out_of;//scaling
+                    float ratio = weight / out_of;//scaling
 
-                    current_scores[rcid] = current_scores[rcid] + (ratio*score);//accumulating the cuurent actual score
+                    current_scores[rcid] = current_scores[rcid] + (ratio * score);//accumulating the cuurent actual score
 
                     max_scores[rcid] = max_scores[rcid] + (weight);//accumulating the maximum possible scores
 
@@ -110,23 +103,22 @@ public class All_Grades extends ActionBarActivity {
 
                 HashMap<String, String> course_grade = new HashMap<String, String>();
 
-                for(int i=0;i<20;i++)
-                {
+                for (int i = 0; i < 20; i++) {
 
-                    if(ids[i]==i)//if that course is part of student's
+                    if (ids[i] == i)//if that course is part of student's
 
                     {
 
-                        course_grade.put("key1",codes[i]);
-                        course_grade.put("key2","Current Grade: "+Float.toString(current_scores[i])+" out of "+Float.toString(max_scores[i]));
+                        course_grade.put("key1", codes[i]);
+                        course_grade.put("key2", "Current Grade: " + String.format("%.1f", current_scores[i]) + "/" + String.format("%.1f", max_scores[i]));
                         gradelist.add(course_grade);
                         ListAdapter adapt = new SimpleAdapter
                                 (
                                         All_Grades.this,
                                         gradelist,
                                         R.layout.list_item2,
-                                        new String[] { "key1", "key2"},
-                                        new int[] { R.id.t1, R.id.t2}
+                                        new String[]{"key1", "key2"},
+                                        new int[]{R.id.t1, R.id.t2}
                                 );
 
                         listView.setAdapter(adapt);
@@ -135,9 +127,7 @@ public class All_Grades extends ActionBarActivity {
 
                 }
 
-            }
-            catch(JSONException E)
-            {
+            } catch (JSONException E) {
                 E.printStackTrace();
             }
 

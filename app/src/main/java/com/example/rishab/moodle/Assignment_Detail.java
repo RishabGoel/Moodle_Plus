@@ -3,6 +3,7 @@ package com.example.rishab.moodle;
 import android.content.Intent;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.TextView;
@@ -21,34 +22,36 @@ public class Assignment_Detail extends ActionBarActivity {
         //displaying various infos related to assignments in different text fileds
 
         String message1 = intent_r.getStringExtra(Course_Assignments.Id);//Id of the assignemnt
-        TextView textView = (TextView)findViewById(R.id.t1);
-        textView.setText("Assignment #" + message1 );
+        TextView textView = (TextView) findViewById(R.id.t1);
+        textView.setText("Assignment #" + message1);
 
         String message2 = intent_r.getStringExtra(Course_Assignments.Name);
-        textView = (TextView)findViewById(R.id.t2);
+        Log.d("sadsa", message2);
+        textView = (TextView) findViewById(R.id.t2);
         textView.setText(message2);//Assignment Topic
 
         String message3 = intent_r.getStringExtra(Course_Assignments.Deadline);
-        textView = (TextView)findViewById(R.id.t3);
-        textView.setText("Submission Deadline: "+message3);
+        textView = (TextView) findViewById(R.id.t3);
+        textView.setText("Submission Deadline: " + message3);
 
         String message4 = intent_r.getStringExtra(Course_Assignments.Description);
-        textView = (TextView)findViewById(R.id.t4);
-        textView.setText("Description: "+newline+message4);//Description
+        Log.d("sadsa", message4);
+        textView = (TextView) findViewById(R.id.t4);
+        textView.setText("Description: " + newline + message4);//Description
 
         String message5 = intent_r.getStringExtra(Course_Assignments.CreatedAt);
-        textView = (TextView)findViewById(R.id.t5);
-        textView.setText("Uploaded on:  "+(message4));
+        textView = (TextView) findViewById(R.id.t5);
+        textView.setText("Uploaded on:  " + (message5));
 
         String message6 = intent_r.getStringExtra(Course_Assignments.Late);
-        textView = (TextView)findViewById(R.id.t6);
-        textView.setText("Late days allowed: "+message6);//late days
+        textView = (TextView) findViewById(R.id.t6);
+        textView.setText("Late days allowed: " + message6);//late days
 
         String message7 = intent_r.getStringExtra(Course_Assignments.Type);
-        textView = (TextView)findViewById(R.id.t7);
-        textView.setText("Type: "+message7);
+        textView = (TextView) findViewById(R.id.t7);
+        textView.setText("Type: " + message7);
 
-       // File left
+        // File left
 
     }
 

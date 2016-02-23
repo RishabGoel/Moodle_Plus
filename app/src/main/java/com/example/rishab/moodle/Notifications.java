@@ -1,4 +1,4 @@
-package com.venturex.parasgupta.myapplication;
+package com.example.rishab.moodle;
 
 import android.app.Notification;
 import android.content.Intent;
@@ -13,6 +13,7 @@ import android.widget.ListView;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
+
 
 public class Notifications extends ActionBarActivity {
 
@@ -58,7 +59,7 @@ public class Notifications extends ActionBarActivity {
                 description[i] = temp.getString("description");
                 //isSeen[i] = temp.getInt("is_seen");
                 //createdAt[i] = temp.getString("created_at");
-               // threadId[i] = temp.getInt("id");
+                // threadId[i] = temp.getInt("id");
                 //userId[i] = temp.getInt("user_id");
             }
 
@@ -89,6 +90,7 @@ public class Notifications extends ActionBarActivity {
 
                     Intent target = new Intent(Notifications.this,ThreadComments.class);
                     target.putExtra("id",threadId[position]);
+                    target.putExtra("thread_name",display[position]);
                     Re q3 = new Re(target,Notifications.this,link[position],1);
                     q3.request();
 
@@ -117,8 +119,27 @@ public class Notifications extends ActionBarActivity {
         int id = item.getItemId();
 
         //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
+        /*if (id == R.id.action_settings) {
             return true;
+        }*/
+
+        switch(id){
+            case R.id.action_grades:
+                Intent target1 = new Intent(Notifications.this,All_Grades.class);
+                Re q1 = new Re(target1,Notifications.this,"/default/grades.json",1);
+                q1.request();
+                break;
+            case R.id.action_notifications:
+                Intent target2 = new Intent(Notifications.this,Notifications.class);
+                Re q2 = new Re(target2,Notifications.this,"/default/notifications.json",1);
+                q2.request();
+                break;
+            case R.id.action_logout:
+                Intent target3 = new Intent(Notifications.this,MainActivity.class);
+                Re q3 = new Re(target3,Notifications.this,"/default/logout.json",1);
+                q3.request();
+                break;
+            default: break;
         }
 
         return super.onOptionsItemSelected(item);
